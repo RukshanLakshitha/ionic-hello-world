@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { User } from '../../models/user';
 
-import {  GithubUsers } from '../../providers/github-users';
+import { GithubUsers } from '../../providers/github-users';
 
 import { UserDetailsPage } from '../user-details/user-details';
 
@@ -12,19 +12,37 @@ import { UserDetailsPage } from '../user-details/user-details';
   templateUrl: 'users.html'
 })
 export class UsersPage {
-  users: User[]
+  users: User[];
+  originalUsers: User[];
 
   constructor(public navCtrl: NavController, private githubUsers: GithubUsers) {
+    //load github users
     githubUsers.load().subscribe(users => {
       this.users = users;
+      this.originalUsers = users;
     });
   }
 
   ionViewDidLoad() {
-    console.log('Hello Users Page');
+    //console.log('Hello Users Page');
   }
 
   goToDetails(login: string) {
-    this.navCtrl.push(UserDetailsPage, {login});
+    this.navCtrl.push(UserDetailsPage, { login });
+  }
+
+  search(searchEvent) {
+    let term = searchEvent.target.value;
+
+    // We will only perform the search if we have 3 or more characters
+    if (term.trim() === '' || term.trim().length < 3) {
+      // Load cached users
+      this.users = this.originalUsers;
+    } else {
+      // Get the searched users from github
+      this.githubUsers.searchUsers(term).subscribe(users => {
+        this.users = users
+      });
+    }
   }
 }
