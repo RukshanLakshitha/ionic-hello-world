@@ -5,7 +5,8 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list>
+  <img class="floating" src="{{user?.avatar_url}}" item-center>
+  <ion-list no-lines style="margin-top:30px;">
     <ion-item>
       <ion-label>Followers</ion-label>
       <ion-badge item-right>{{user?.followers}}</ion-badge>
