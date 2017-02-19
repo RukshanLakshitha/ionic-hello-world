@@ -5,9 +5,10 @@
       <ion-title>Pages</ion-title>
     </ion-toolbar>
   </ion-header>
-
+  
   <ion-content>
-    <ion-list>
+    <img src="http://www.globalcleanenergycorp.com/images/background-sky.jpg"/>
+    <ion-list style="margin-top:-56px;">
       <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
